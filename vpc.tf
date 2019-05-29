@@ -77,3 +77,8 @@ resource "aws_route_table_association" "association_c" {
   subnet_id      = "${aws_subnet.subnet_availability_zone_c.id}"
   route_table_id = "${aws_route_table.custom_route_table.id}"
 }
+
+resource "aws_key_pair" "wordpress_key_pair" {
+  key_name   = "wordpress_key"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAy0a4pC1sB5VIzZi86z/l/b7dDJhQbaT9os7VYycEFEq45KOPuPJ040MqrmTu2oQi+WugZDnxdW3ZgEbwkGVyhCy+8KPEkTetBKaZQAQIwdWvFj/pWuLscyFeZ2zYB19H9fmDVkNSEdvurjxtv7PdDNhdXPtSP/waYxgHmPX5VT8ssn5oASPH4p4v/Agdx9N1a76xVXzUuExw6R8XHGcr7BFsflnFt068/tiHnkcux0A9NRtf3De5ZnWq1I/PgwNC3HC052Etqou6gO07FjCYL8cdIsRWRKlToiPFEnLIBxkmSKWYj8SkVJDJ3y3TTx92BkTNzoAa6VzbXacPp/3RGw== krishna.sarma@smartpipesolutions.com"
+}
