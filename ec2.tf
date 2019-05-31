@@ -42,13 +42,6 @@ resource "aws_security_group" "mgmt_instance_security_group" {
     cidr_blocks = ["185.23.52.222/32"]
   }
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["185.23.52.222/32"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -57,7 +50,7 @@ resource "aws_security_group" "mgmt_instance_security_group" {
   }
 }
 
-resource "aws_instance" "ec2_instance" {
+resource "aws_instance" "ec2_wordpress" {
   ami                         = "ami-0eab3a90fc693af19"
   instance_type               = "t2.micro"
   subnet_id                   = "${aws_subnet.subnet_availability_zone_a.id}"
