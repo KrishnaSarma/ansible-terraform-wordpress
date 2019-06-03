@@ -51,7 +51,7 @@ resource "aws_security_group" "mgmt_instance_security_group" {
 }
 
 resource "aws_launch_configuration" "wp_asg_launch_config" {
-  name_prefix                 = "wordpress-"
+  name                        = "wordpress-lauch-config"
   image_id                    = "ami-0eab3a90fc693af19"
   instance_type               = "t2.micro"
   associate_public_ip_address = "True"
@@ -72,6 +72,16 @@ resource "aws_autoscaling_group" "wp_asg" {
   launch_configuration = "${aws_launch_configuration.wp_asg_launch_config.name}"
   vpc_zone_identifier  = ["${aws_subnet.subnet_availability_zone_a.id}", "${aws_subnet.subnet_availability_zone_b.id}", "${aws_subnet.subnet_availability_zone_c.id}"]
   target_group_arns    = ["${aws_lb_target_group.wordpress_instance_target.arn}"]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tag {
+    key                 = "Name"
+    value               = "wordpress-instance"
+    propagate_at_launch = true
+  }
 }
 
 resource "aws_autoscaling_policy" "wp_asg_scaleup_policy" {
