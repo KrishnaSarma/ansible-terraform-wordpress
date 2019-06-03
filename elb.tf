@@ -39,11 +39,3 @@ resource "aws_lb_listener" "wordpress_https_lb_listener" {
     target_group_arn = "${aws_lb_target_group.wordpress_instance_target.arn}"
   }
 }
-
-#changes when ASG is implemented
-
-resource "aws_lb_target_group_attachment" "wordpress_target_group_attachment" {
-  target_group_arn = "${aws_lb_target_group.wordpress_instance_target.arn}"
-  target_id        = "${aws_instance.ec2_wordpress.id}"
-  port             = "80"
-}
