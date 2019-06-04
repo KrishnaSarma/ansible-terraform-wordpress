@@ -51,7 +51,7 @@ resource "aws_security_group" "mgmt_instance_security_group" {
 }
 
 resource "aws_launch_configuration" "wp_asg_launch_config" {
-  name                        = "wordpress-lauch-config"
+  name_prefix                 = "wordpress-"
   image_id                    = "ami-0eab3a90fc693af19"
   instance_type               = "t2.micro"
   associate_public_ip_address = "True"
