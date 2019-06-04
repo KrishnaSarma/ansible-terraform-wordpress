@@ -57,6 +57,7 @@ resource "aws_launch_configuration" "wp_asg_launch_config" {
   associate_public_ip_address = "True"
   security_groups             = ["${aws_security_group.mgmt_instance_security_group.id}", "${aws_security_group.sg-internet-instances.id}"]
   key_name                    = "${aws_key_pair.wordpress_key_pair.key_name}"
+  user_data                   = "${file("user_data/user_data_test.sh")}"
 
   lifecycle {
     create_before_destroy = true
@@ -80,6 +81,12 @@ resource "aws_autoscaling_group" "wp_asg" {
   tag {
     key                 = "Name"
     value               = "wordpress-instance"
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "Project"
+    value               = "wordpress"
     propagate_at_launch = true
   }
 }
