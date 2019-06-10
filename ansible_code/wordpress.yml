@@ -1,0 +1,45 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+
+  - name: Add remi-php73
+    yum_repository:
+      name: remi-php73
+      description: Remi's PHP 7.3 RPM repository for Enterprise Linux $releasever - $basearch
+      mirrorlist: http://rpms.remirepo.net/enterprise/$releasever/php73/mirror
+      enabled: yes
+      gpgcheck: 1
+      gpgkey: http://rpms.remirepo.net/RPM-GPG-KEY-remi
+
+  - name: install the EPEL yum repository
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install Apache / PHP 7.3
+    yum:
+      name:
+        - httpd
+        - php
+        - php-mysql
+        - unzip
+        - tar
+      state: present
+
+  - name: Download and extract Wordpress
+    unarchive:
+       src: http://wordpress.org/wordpress-latest.tar.gz
+       dest: /var/www/html
+       remote_src: yes
+       owner: apache
+       group: apache
+       mode: u=rwX,g=rX,o=rX
+       extra_opts: ['--strip-components=1', '--show-stored-names']
+
+  - name: Make sure Apache is started now and at boot.
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+
