@@ -1,1 +1,5 @@
-52.56.245.38
+[dev]    
+18.130.245.140
+    
+[dev:vars]
+s3code=honeyenditsolutions-code-bucket

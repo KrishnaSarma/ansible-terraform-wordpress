@@ -3,7 +3,4 @@ email = "krishna.sarma@smartpipesolutions.com"
 environment = "qa"
 application = "wordpress"
 jira_ticket_no = "TAS-1234"
-user_name = "JMorgan"
-max_instance_size = "3"
-min_instance_size = "1"
-desired_instance_size = "1"
+
