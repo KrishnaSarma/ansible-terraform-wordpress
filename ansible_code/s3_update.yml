@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  
+  - name: get a file from host
+    s3_sync:
+      region: "eu-west-2"
+      bucket: honeyenditsolutions-code-bucket
+      file_root: /var/www/html/

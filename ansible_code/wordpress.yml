@@ -42,4 +42,17 @@
       name: httpd
       state: started
       enabled: yes
-
+  
+  - name: Install pip
+    easy_install:
+      name: pip
+      state: latest
+  
+  - name: Install pip packages
+    pip:
+      name:
+        -  awscli
+        - boto
+        - boto3 >= 1.4.4
+        - botocore
+        - python-dateutil

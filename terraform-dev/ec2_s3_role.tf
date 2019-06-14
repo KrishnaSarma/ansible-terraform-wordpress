@@ -1,39 +1,3 @@
-data "aws_iam_policy_document" "s3_read_write" {
-
-  statement {
-
-  actions = [
-      "s3:ListAllMyBuckets",
-      "s3:GetBucketLocation",
-    ]
-
-    resources = [
-      "arn:aws:s3:::*",
-    ]
-  }
-
-  statement {
-
-  actions = [
-    "s3:ListBucket",
-  ]
-
-  resources = [
-    "arn:aws:s3:::honeyenditsolutions-code-bucket"]
-  }
-
-  statement {
-
-  actions = [
-    "s3:GetObject",
-    "s3:PutObject"
-  ]
-
-  resources = [
-    "arn:aws:s3:::honeyenditsolutions-code-bucket"]
-  }
-}
-
 data "aws_iam_policy_document" "assume_role" {
         statement {
 
@@ -57,7 +21,38 @@ resource "aws_iam_role" "ec2_s3" {
 
 resource "aws_iam_role_policy" "ec2_s3_readwrite" {
   name        = "WP_EC2_S3_read_write_policy"
-  policy      = "${data.aws_iam_policy_document.s3_read_write.json}"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::honeyenditsolutions-code-bucket*",
+                "arn:aws:s3:::honeyenditsolutions-code-bucket/*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": "s3:ListAllMyBuckets",
+            "Resource": "*"
+        }
+    ]
+}
+EOF
   role = "${aws_iam_role.ec2_s3.id}"
 }
 
