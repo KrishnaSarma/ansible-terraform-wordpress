@@ -38,7 +38,7 @@ resource "aws_instance" "ec2" {
   associate_public_ip_address = "True"
   vpc_security_group_ids      = ["${data.aws_security_group.vpc_sg_internet.id}", "${data.aws_security_group.vpc_sg_mgmt.id}"]
   subnet_id                   = "${data.aws_subnet.subnet_az_a.id}"
-
+  iam_instance_profile = "${aws_iam_instance_profile.role_instance_profile.name}"
   tags {
     Name = "Wordpress-dev-instance"
   }
