@@ -66,7 +66,7 @@ resource "aws_ami_from_instance" "wp_custom_ami" {
 
   provisioner "local-exec" {
     command = <<EOT
-cat <<EOF > ../terraform/user_data/bootstrap.sh
+cat <<EOF > ../terraform-prod/user_data/bootstrap.sh
 #!/bin/bash
 /usr/bin/aws s3 sync s3://${aws_s3_bucket.code_bucket.bucket} /var/www/html/
 /bin/touch /var/spool/cron/root
