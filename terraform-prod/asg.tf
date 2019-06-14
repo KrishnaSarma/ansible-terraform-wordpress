@@ -1,8 +1,8 @@
 data "aws_ami" "custom_ami" {
-#  executable_users = ["self"]
-  most_recent      = true
-  owners           = ["self"]
-  name_regex = "custom*"
+  #  executable_users = ["self"]
+  most_recent = true
+  owners      = ["self"]
+  name_regex  = "custom*"
 }
 
 resource "aws_key_pair" "wordpress_key_pair" {
@@ -58,10 +58,9 @@ resource "aws_security_group" "mgmt_instance_security_group" {
 }
 
 resource "aws_launch_configuration" "wp_asg_launch_config" {
-  name_prefix = "wordpress-"
-  image_id    = "${data.aws_ami.custom_ami.id}"
-
-  #  image_id                    = "ami-0eab3a90fc693af19"
+  name_prefix                 = "wordpress-"
+  image_id                    = "${data.aws_ami.custom_ami.id}"
+  iam_instance_profile        = "${aws_iam_instance_profile.role_instance_profile.name}"
   instance_type               = "t2.micro"
   associate_public_ip_address = "True"
   security_groups             = ["${aws_security_group.mgmt_instance_security_group.id}", "${aws_security_group.sg-internet-instances.id}"]
